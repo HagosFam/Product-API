@@ -35,9 +35,9 @@ public class ProductController {
     }
 
     @DeleteMapping("/{productId}")
-    public ResponseEntity<String> deleteProduct(@PathVariable String productId) { // the ? is generic type, we can return anything
+    public ResponseEntity<Void> deleteProduct(@PathVariable String productId) { // the ? is generic type, we can return anything
       productService.deleteProduct(productId);
-        return new ResponseEntity<>("Deleted", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>( HttpStatus.NO_CONTENT);
     }
 
     // updating a product
