@@ -11,8 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductDTO {
-    private Long productId;
+    private String Id;
+    private String productId;
     private String name;
     private float price;
-    private List<Long> reviewsId;
+    private List<String> reviewsId;
 }

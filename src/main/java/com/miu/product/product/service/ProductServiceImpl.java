@@ -5,7 +5,6 @@ import com.miu.product.product.domain.ProductAdapter;
 import com.miu.product.product.domain.ProductDTO;
 import com.miu.product.product.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,41 +14,41 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     ProductRepository productRepository;
+
     @Override
     public ProductDTO createProduct(Product product) {
-       // create a product
-       Product product1 =  productRepository.save(product);
-       return ProductAdapter.toProductDTO(product1);
+        // create a product
+        Product product1 = productRepository.save(product);
+        return ProductAdapter.toProductDTO(product1);
     }
 
     @Override
-    public ProductDTO editProduct(Product product, Long productId) {
-        Optional<Product> product1 = productRepository.findById(productId);
-         if(!product1.isEmpty()) {
-         }
-         return null;
-    }
-
-    @Override
-    public ProductDTO deleteProduct(Long productId) {
-          // delete a product
-            Optional<Product> product1 = productRepository.findById(productId);
-            if(!product1.isEmpty()) {
-                productRepository.deleteById(productId);
-            }
+    public ProductDTO updateProduct(Product product, String productId) {
+        // check if the product with the given ID exists
+        if (!productRepository.existsById(productId)) {
             return null;
+        }
+        product.setId(productId);
+        Product product1 = productRepository.save(product);
+        return ProductAdapter.toProductDTO(product1);
     }
 
     @Override
-    public ProductDTO searchProduct(Long productId) {
+    public void deleteProduct(String Id) {
+        // delete a product
+       productRepository.deleteById(Id);
+    }
+
+    @Override
+    public ProductDTO searchProduct(String productId) {
         Product product = productRepository.findById(productId).get();
         return ProductAdapter.toProductDTO(product);
     }
 
     @Override
     public ProductDTO findByName(String name) {
-       Product products = productRepository.findByName(name);
-       return ProductAdapter.toProductDTO(products);
+        Product products = productRepository.findByName(name);
+        return ProductAdapter.toProductDTO(products);
     }
 
     @Override
@@ -57,10 +56,11 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = productRepository.findByReviewsReviewer(reviewerName);
         return ProductAdapter.toProductDTOs(products);
     }
+
     @Override
-    public List<ProductDTO> fetchProduct() {
-       List<Product> products = productRepository.findAll();
-         return ProductAdapter.toProductDTOs(products);
+    public List<Product> fetchProducts() {
+        List<Product> products = productRepository.findAll();
+        return products;
     }
 
 }

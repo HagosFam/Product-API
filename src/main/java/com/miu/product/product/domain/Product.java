@@ -14,8 +14,10 @@ import java.util.List;
 @NoArgsConstructor
 public class Product {
     @Id
-    private Long productId;
+    private String Id;
+    private String productId;
     private String name;
     private float price;
     private List<Review> reviews;
+
 }
